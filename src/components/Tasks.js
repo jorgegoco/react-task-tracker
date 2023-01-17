@@ -1,18 +1,30 @@
 import PropTypes from 'prop-types';
+import Task from './Task';
 
-const Tasks = ({ tasks }) => (
+const Tasks = ({ tasks, onDelete, onToggle }) => (
   <>
-    {tasks.map((task) => (<h3 key={task.id}>{task.text}</h3>))}
+    {tasks.map((task) => (
+      <Task key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} />
+    ))}
   </>
 
 );
 
 Tasks.defaultProps = {
   tasks: [],
+  onDelete: 'onDelete',
+  onToggle: 'onToggle',
 };
 
 Tasks.propTypes = {
-  tasks: PropTypes.arrayOf,
+  tasks: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    text: PropTypes.string,
+    day: PropTypes.string,
+    reminder: PropTypes.bool,
+  })),
+  onDelete: PropTypes.func,
+  onToggle: PropTypes.func,
 };
 
 export default Tasks;
